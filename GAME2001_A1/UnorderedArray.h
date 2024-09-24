@@ -6,7 +6,7 @@ template<class T>
 class UnorderedArray : public ArrayBase<T>
 {
 public:
-	UnorderedArray(int size, int growBy = 1) : ArrayBase<T>::ArrayBase(size, growBy){}
+	UnorderedArray(int size) : ArrayBase<T>::ArrayBase(size){}
 
 	void push(T value) override
 	{

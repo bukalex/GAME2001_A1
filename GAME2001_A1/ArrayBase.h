@@ -1,6 +1,7 @@
 #pragma once
 
 #include <cassert>
+#include <math.h>
 
 using namespace std;
 
@@ -11,20 +12,18 @@ protected:
 	T* m_array;
 
 	int m_maxSize;
-	int m_growSize;
 	int m_numElements;
 
 public:
-	ArrayBase(int size, int growBy = 1) : m_array(NULL), m_maxSize(0), m_growSize(0), m_numElements(0)
+	ArrayBase(int size) : m_array(NULL), m_maxSize(0), m_numElements(0)
 	{
-		if (size)
-		{
-			m_maxSize = size;
-			m_array = new T[m_maxSize];
-			memset(m_array, 0, sizeof(T) * m_maxSize);
+		if (size <= 0) size = 1;
 
-			m_growSize = growBy > 0 ? growBy : 0;
-		}
+		m_maxSize = pow(2, ceil(log2(size)));
+		m_array = new T[m_maxSize];
+		memset(m_array, 0, sizeof(T) * m_maxSize);
+
+		cout << "Array created. m_maxSize = " << m_maxSize << endl;
 	}
 
 	~ArrayBase()
@@ -78,17 +77,6 @@ public:
 		return m_maxSize;
 	}
 
-	int GetGrowSize()
-	{
-		return m_growSize;
-	}
-
-	void SetGrowSize(int val)
-	{
-		assert(val >= 0);
-		m_growSize = val;
-	}
-
 	T& operator[](int index)
 	{
 		assert(m_array != nullptr && index < m_numElements);
@@ -98,9 +86,7 @@ public:
 protected:
 	bool Expand()
 	{
-		if (m_growSize <= 0) return false;
-
-		T* temp = new T[m_maxSize + m_growSize];
+		T* temp = new T[m_maxSize * 2];
 		assert(temp != nullptr);
 
 		memcpy(temp, m_array, sizeof(T) * m_maxSize);
@@ -110,8 +96,9 @@ protected:
 		m_array = temp;
 		temp = nullptr;
 
-		m_maxSize += m_growSize;
+		m_maxSize *= 2;
 
+		cout << "Array expanded. m_maxSize = " << m_maxSize << endl;
 		return true;
 	}
 };

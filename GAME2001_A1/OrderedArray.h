@@ -6,13 +6,13 @@ template<class T>
 class OrderedArray : public ArrayBase<T>
 {
 public:
-	OrderedArray(int size, int growBy = 1) : ArrayBase<T>::ArrayBase(size, growBy) {}
+	OrderedArray(int size) : ArrayBase<T>::ArrayBase(size) {}
 
 	void push(T value) override
 	{
 		assert(this->m_array != nullptr);
 
-		if (this->m_numElements)
+		if (this->m_numElements >= this->m_maxSize)
 		{
 			this->Expand();
 		}
