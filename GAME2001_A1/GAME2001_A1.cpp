@@ -36,7 +36,12 @@ int main()
     {
         cout << orderedArray[i] << " ";
     }
-    cout << endl << endl;
+    cout << endl;
+
+    cout << "Number 6 is at index " << orderedArray.search(6) << endl;
+    cout << "Number 8 is at index " << orderedArray.search(8) << endl;
+    cout << "Number 13 is at index " << orderedArray.search(13) << endl;
+    cout << endl;
 
     cout << "Unordered Array" << endl << endl;
     UnorderedArray<int> unorderedArray(3);
@@ -69,4 +74,8 @@ int main()
         cout << unorderedArray[i] << " ";
     }
     cout << endl;
+
+    cout << "Number 6 is at index " << unorderedArray.search(6) << endl;
+    cout << "Number 8 is at index " << unorderedArray.search(8) << endl;
+    cout << "Number 13 is at index " << unorderedArray.search(13) << endl;
 }

@@ -5,12 +5,16 @@
 template<class T>
 class OrderedArray : public ArrayBase<T>
 {
+private:
+	bool m_allowDuplicateData;
+
 public:
-	OrderedArray(int size) : ArrayBase<T>::ArrayBase(size) {}
+	OrderedArray(int size, bool allowDuplicateData = false) : ArrayBase<T>::ArrayBase(size) {}
 
 	void push(T value) override
 	{
 		assert(this->m_array != nullptr);
+		if (!m_allowDuplicateData && search(value) != -1) return;
 
 		if (this->m_numElements >= this->m_maxSize)
 		{
